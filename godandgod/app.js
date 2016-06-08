@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+global.pool = require('./config/dbpool'); //전역변수로 pool 을 사용할 수 있도록 사용 
+
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var post = require('./routes/post');
@@ -62,7 +65,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.listen(3000, function(){
+    console.log("3000 connected");
+    // console.log(process.env.port);
+    
+        // console.log("process :" ,process.env);
 
+});
 
 
 module.exports = app;

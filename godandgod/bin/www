@@ -12,8 +12,9 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+var httpPort = normalizePort(process.env.PORT || '80');
+app.set('httpPort', httpPort);
+
 
 /**
  * Create HTTP server.
@@ -25,7 +26,14 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(httpPort,function(){
+  console.log('http 서버를 시작합니다...');
+  if(process.env.NODE_ENV ==='development'){
+      console.log('development');
+    }else if(process.env.NODE_ENV ==='production'){
+      console.log('ppp');
+    }
+});
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -59,8 +67,8 @@ function onError(error) {
   }
 
   var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    ? 'Pipe ' + httpPort
+    : 'Port ' + httpPort;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
